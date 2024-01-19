@@ -1,0 +1,58 @@
+create table team( tid int primary key,tname varchar(20),coach varchar(20),captain_pid int,city varchar(20));
+create table player( pid int primary key,pname varchar(2),age int,tid int references team(tid));
+create table stadium(sid int primary key,sname varchar(20),picode number(8),city varchar(20),area varchar(20));
+create table match(mid int primary key,mdate date,time varchar(6),sid int references stadium(sid),team1_id int references team(tid),team2_id int references team(tid),winning_team_id int references team(tid),man_of_match int references player(pid), pid int references player(pid));
+create table player_phone( pid int references player(pid),phone int,primary key(pid,phone));
+
+insert into team values(123,'rcb','sunil',1,'bangalore');
+insert into team values(124,'csk','laxman',6,'chenai');
+insert into team values(125,'royal','singh',4,'rajasthan');
+insert into team values(127,'dare','sehwag',5,'delhi');
+
+insert into player values(1,'sachin',33,123);
+insert into player values(2,'dravid',32,123);
+insert into player values(3,'dhoni',30,123);
+insert into player values(4,'raina',30,123);
+insert into player values(5,'kohli',23,123);
+
+insert into stadium values(111,'chinnaswamy',57001,'bangalore','mg');
+insert into stadium values(222,'kotla',58001,'delhi','aaa');
+insert into stadium values(333,'internationsl',59001,'chennai','ddd');
+insert into stadium values(444,'ksca',51001,'bangalore','ttt');
+insert into stadium values(555,'csca',55001,'cochin','nnn');
+
+insert into match values(1,'10-jan-2017','10am',111,123,124,123,1,1);
+insert into match values(102,'9-jan-2017','9am',222,124,127,127,5,3);
+insert into match values(103,'15-jan-2017','12pm',111,125,127,127,5,3);
+insert into match values(104,'19-jan-2017','8pm',111,125,123,123,1,1);
+
+insert into player_phone values(1,10201710);
+insert into player_phone values(2,10201709);
+insert into player_phone values(2,102017105);
+insert into player_phone values(3,102017109);
+
+Select pname, tname, age from player p,team t where p.tid=t.tid and age =(select min(age) from player);
+pname	tname	age
+kohli	rcb	23
+
+select m.sid,count(m.mid),s.sname from match m,stadium s where
+m.sid=s.sid group by m.sid order by m.mid limit 1;
+sid	count(m.mid)	sname
+111	3	chinnaswamy
+
+select * from player where pid not in(select captain_pid from team)
+and pid in(select m.pid from match m group by m.man_of_match
+having count(m.man_of_match)>1);
+pid	pname	age	tid
+3	dhoni	30	123
+
+select m.winning_team_id,count(m.winning_team_id) from match m group by m.winning_team_id
+order by count(m.winning_team_id) desc limit 1;
+winning_team_id	count(m.winning_team_id)
+127	2
+
+
+select m.winning_team_id,t.tname,m.sid,s.sname from match m,team t,stadium s
+where m.winning_team_id=t.tid and m.sid=s.sid group by m.winning_team_id having count( distinct m.sid)=1;
+winning_team_id	tname	sid	sname
+123	rcb	111	chinnaswamy
