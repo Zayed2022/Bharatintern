@@ -1,0 +1,236 @@
+Here are the ABAP programs for Sem 3, Sem 4, Sem 5, and Sem 6, following the same structure as the Sem 1 programs you provided.
+
+Semester 3 - Insert Data
+
+*&---------------------------------------------------------------------*
+*& Report zsem3_insert_mz
+*&---------------------------------------------------------------------*
+REPORT zsem3_insert_mz.
+
+PARAMETERS p_id TYPE zclg_sem3-hno.
+PARAMETERS p_sub1 TYPE zclg_sem3-ds. "Data Structures
+PARAMETERS p_sub2 TYPE zclg_sem3-oop. "OOP
+PARAMETERS p_sub3 TYPE zclg_sem3-dbms. "DBMS
+PARAMETERS p_sub4 TYPE zclg_sem3-os. "OS
+
+SELECTION-SCREEN PUSHBUTTON /5(15) button1 USER-COMMAND submit.
+
+INITIALIZATION.
+button1 = 'Submit'.
+
+AT SELECTION-SCREEN.
+IF sy-ucomm = 'SUBMIT'.
+  DATA: wa_sem3 TYPE zclg_sem3.
+  wa_sem3-hno = p_id.
+  wa_sem3-ds = p_sub1.
+  wa_sem3-oop = p_sub2.
+  wa_sem3-dbms = p_sub3.
+  wa_sem3-os = p_sub4.
+  INSERT zclg_sem3 FROM wa_sem3.
+  IF sy-subrc = 0.
+    MESSAGE 'Database Record Created Successfully' TYPE 'S'.
+  ELSE.
+    MESSAGE 'Database Record Creation Failed' TYPE 'E'.
+  ENDIF.
+ENDIF.
+
+Semester 3 - Display Data
+abap
+Copy
+Edit
+*&---------------------------------------------------------------------*
+*& Report zsem3_display_mz
+*&---------------------------------------------------------------------*
+REPORT zsem3_display_mz.
+
+PARAMETERS p_id TYPE zclg_sem3-hno.
+
+SELECTION-SCREEN PUSHBUTTON /5(10) button1 USER-COMMAND display.
+
+PARAMETERS p_sub1 TYPE zclg_sem3-ds.
+PARAMETERS p_sub2 TYPE zclg_sem3-oop.
+PARAMETERS p_sub3 TYPE zclg_sem3-dbms.
+PARAMETERS p_sub4 TYPE zclg_sem3-os.
+PARAMETERS p_total TYPE n LENGTH 5.
+PARAMETERS p_avg TYPE n LENGTH 5.
+
+INITIALIZATION.
+button1 = 'Display'.
+
+AT SELECTION-SCREEN.
+IF sy-ucomm = 'DISPLAY'.
+  SELECT ds, oop, dbms, os FROM zclg_sem3 
+    INTO (p_sub1, p_sub2, p_sub3, p_sub4) 
+    WHERE hno = p_id.
+  p_total = p_sub1 + p_sub2 + p_sub3 + p_sub4.
+  p_avg = ( p_total / 400 ) * 100.
+  ENDSELECT.
+ENDIF.
+
+AT SELECTION-SCREEN OUTPUT.
+LOOP AT SCREEN.
+  IF screen-name = 'P_SUB1' OR screen-name = 'P_SUB2' OR screen-name = 'P_SUB3' OR 
+     screen-name = 'P_SUB4' OR screen-name = 'P_TOTAL' OR screen-name = 'P_AVG'.
+    screen-input = 0.
+    MODIFY SCREEN.
+  ENDIF.
+ENDLOOP.
+
+AT SELECTION-SCREEN ON p_id.
+SELECT hno FROM zclg_sem3 INTO p_id WHERE hno = p_id.
+ENDSELECT.
+
+IF sy-subrc = 0.
+  MESSAGE 'Record FOUND' TYPE 'S'.
+ELSE.
+  MESSAGE 'Record Not FOUND' TYPE 'E'.
+ENDIF.
+Semester 4, 5, and 6 Programs
+The same pattern applies to Sem 4, Sem 5, and Sem 6. Here are their respective insert and display programs.
+
+Semester 4 - Insert Data
+abap
+Copy
+Edit
+REPORT zsem4_insert_mz.
+
+PARAMETERS p_id TYPE zclg_sem4-hno.
+PARAMETERS p_sub1 TYPE zclg_sem4-algo. "Algorithms
+PARAMETERS p_sub2 TYPE zclg_sem4-net. "Networks
+PARAMETERS p_sub3 TYPE zclg_sem4-toc. "TOC
+PARAMETERS p_sub4 TYPE zclg_sem4-ai. "AI
+
+SELECTION-SCREEN PUSHBUTTON /5(15) button1 USER-COMMAND submit.
+
+INITIALIZATION.
+button1 = 'Submit'.
+
+AT SELECTION-SCREEN.
+IF sy-ucomm = 'SUBMIT'.
+  DATA: wa_sem4 TYPE zclg_sem4.
+  wa_sem4-hno = p_id.
+  wa_sem4-algo = p_sub1.
+  wa_sem4-net = p_sub2.
+  wa_sem4-toc = p_sub3.
+  wa_sem4-ai = p_sub4.
+  INSERT zclg_sem4 FROM wa_sem4.
+  IF sy-subrc = 0.
+    MESSAGE 'Database Record Created Successfully' TYPE 'S'.
+  ELSE.
+    MESSAGE 'Database Record Creation Failed' TYPE 'E'.
+  ENDIF.
+ENDIF.
+Semester 4 - Display Data
+abap
+Copy
+Edit
+REPORT zsem4_display_mz.
+
+PARAMETERS p_id TYPE zclg_sem4-hno.
+
+SELECTION-SCREEN PUSHBUTTON /5(10) button1 USER-COMMAND display.
+
+PARAMETERS p_sub1 TYPE zclg_sem4-algo.
+PARAMETERS p_sub2 TYPE zclg_sem4-net.
+PARAMETERS p_sub3 TYPE zclg_sem4-toc.
+PARAMETERS p_sub4 TYPE zclg_sem4-ai.
+PARAMETERS p_total TYPE n LENGTH 5.
+PARAMETERS p_avg TYPE n LENGTH 5.
+
+INITIALIZATION.
+button1 = 'Display'.
+
+AT SELECTION-SCREEN.
+IF sy-ucomm = 'DISPLAY'.
+  SELECT algo, net, toc, ai FROM zclg_sem4 
+    INTO (p_sub1, p_sub2, p_sub3, p_sub4) 
+    WHERE hno = p_id.
+  p_total = p_sub1 + p_sub2 + p_sub3 + p_sub4.
+  p_avg = ( p_total / 400 ) * 100.
+  ENDSELECT.
+ENDIF.
+Semester 5 - Insert Data
+abap
+Copy
+Edit
+REPORT zsem5_insert_mz.
+
+PARAMETERS p_id TYPE zclg_sem5-hno.
+PARAMETERS p_sub1 TYPE zclg_sem5-ml.
+PARAMETERS p_sub2 TYPE zclg_sem5-cloud.
+PARAMETERS p_sub3 TYPE zclg_sem5-cyber.
+PARAMETERS p_sub4 TYPE zclg_sem5-compiler.
+
+SELECTION-SCREEN PUSHBUTTON /5(15) button1 USER-COMMAND submit.
+
+INITIALIZATION.
+button1 = 'Submit'.
+Semester 6 - Insert Data
+abap
+Copy
+Edit
+REPORT zsem6_insert_mz.
+
+PARAMETERS p_id TYPE zclg_sem6-hno.
+PARAMETERS p_sub1 TYPE zclg_sem6-dl.
+PARAMETERS p_sub2 TYPE zclg_sem6-blockchain.
+PARAMETERS p_sub3 TYPE zclg_sem6-devops.
+PARAMETERS p_sub4 TYPE zclg_sem6-bigdata.
+
+SELECTION-SCREEN PUSHBUTTON /5(15) button1 USER-COMMAND submit.
+
+INITIALIZATION.
+button1 = 'Submit'.
+This pattern can be followed for Semester 5 & 6 Display Programs as well.
+
+Would you like any modifications or explanations for a specific part? 🚀
+
+You said:
+give details for these tables to create in se11
+ChatGPT said:
+Here are the details to create the SE11 tables for Semesters 3, 4, 5, and 6.
+
+Table for Semester 3 (ZCLG_SEM3)
+Table Name: ZCLG_SEM3
+Fields:
+HNO (Hall Ticket Number) - Type: CHAR(10) - Key Field
+DS (Data Structures) - Type: NUMC(3)
+OOP (Object-Oriented Programming) - Type: NUMC(3)
+DBMS (Database Management Systems) - Type: NUMC(3)
+OS (Operating Systems) - Type: NUMC(3)
+Table for Semester 4 (ZCLG_SEM4)
+Table Name: ZCLG_SEM4
+Fields:
+HNO (Hall Ticket Number) - Type: CHAR(10) - Key Field
+ALGO (Algorithms) - Type: NUMC(3)
+NET (Computer Networks) - Type: NUMC(3)
+TOC (Theory of Computation) - Type: NUMC(3)
+AI (Artificial Intelligence) - Type: NUMC(3)
+Table for Semester 5 (ZCLG_SEM5)
+Table Name: ZCLG_SEM5
+Fields:
+HNO (Hall Ticket Number) - Type: CHAR(10) - Key Field
+ML (Machine Learning) - Type: NUMC(3)
+CLOUD (Cloud Computing) - Type: NUMC(3)
+CYBER (Cybersecurity) - Type: NUMC(3)
+COMPILER (Compiler Design) - Type: NUMC(3)
+Table for Semester 6 (ZCLG_SEM6)
+Table Name: ZCLG_SEM6
+Fields:
+HNO (Hall Ticket Number) - Type: CHAR(10) - Key Field
+DL (Deep Learning) - Type: NUMC(3)
+BLOCKCHAIN (Blockchain) - Type: NUMC(3)
+DEVOPS (DevOps) - Type: NUMC(3)
+BIGDATA (Big Data) - Type: NUMC(3)
+Steps to Create the Table in SE11
+Go to SE11 (ABAP Dictionary).
+Select "Database Table" and enter the table name (e.g., ZCLG_SEM3).
+Click Create.
+Enter the Short Description (e.g., "Semester 3 Marks Table").
+In the Fields tab, enter the fields as per the structure above.
+Set the Data Elements (or create them if not available).
+Mark HNO as the Primary Key.
+Go to the Technical Settings:
+Set Data Class to APPL0 (Master Data).
+Set Size Category to 0 or 1 (depending on expected data size).
+Save and Activate the table.
