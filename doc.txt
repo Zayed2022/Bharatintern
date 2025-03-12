@@ -1,3 +1,54 @@
+*work on vbap to internal table.
+REPORT z_vbap_demo.
+
+* Define a structure type for the required VBAP fields
+TYPES: BEGIN OF ty_vbap,
+           vbeln TYPE vbap-vbeln,  " Sales Document
+           posnr TYPE vbap-posnr,  " Item Number
+           matnr TYPE vbap-matnr,  " Material Number
+           matkl TYPE vbap-matkl,  " Material Group
+           arktx TYPE vbap-arktx,  " Short Text
+       END OF ty_vbap.
+
+* Declare work area and internal table
+DATA: wa_vbap TYPE ty_vbap,
+      t_vbap TYPE TABLE OF ty_vbap.
+
+* Populate the work area with data
+wa_vbap-vbeln = '1000001'.
+wa_vbap-posnr = '10'.
+wa_vbap-matnr = 'MAT001'.
+wa_vbap-matkl = 'GRP01'.
+wa_vbap-arktx = 'Test Material 1'.
+
+* Append record to the internal table
+APPEND wa_vbap TO t_vbap.
+
+* Insert another record using work area
+CLEAR wa_vbap.
+wa_vbap-vbeln = '1000002'.
+wa_vbap-posnr = '20'.
+wa_vbap-matnr = 'MAT002'.
+wa_vbap-matkl = 'GRP02'.
+wa_vbap-arktx = 'Test Material 2'.
+
+INSERT wa_vbap INTO TABLE t_vbap.
+
+* Insert another record using inline declaration
+INSERT VALUE ty_vbap( vbeln = '1000003'
+                       posnr = '30'
+                       matnr = 'MAT003'
+                       matkl = 'GRP03'
+                       arktx = 'Test Material 3' ) INTO TABLE t_vbap.
+
+* Display the records in the internal table
+LOOP AT t_vbap INTO wa_vbap.
+  WRITE: / wa_vbap-vbeln, wa_vbap-posnr, wa_vbap-matnr, wa_vbap-matkl, wa_vbap-arktx.
+ENDLOOP.
+
+
+
+------------------------
 ```abap
 REPORT zmd_internal_tb.
 
