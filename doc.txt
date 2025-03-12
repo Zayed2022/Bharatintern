@@ -1,3 +1,30 @@
+```abap
+REPORT zmd_internal_tb.
+
+TYPES: BEGIN OF ty_mara,
+         mbrsh TYPE mbrsh,
+         matnr TYPE matnr,
+         ernam TYPE ernam,
+         pstat TYPE pstat_d,
+       END OF ty_mara.
+
+DATA: t_mara TYPE STANDARD TABLE OF mara,
+      wa_mara TYPE mara .
+
+"SELECT matnr,mbrsh,ernam,pstat FROM mara INTO CORRESPONDING FIELDS OF TABLE @t_mara UP TO 20 ROWS.
+wa_mara-matnr = 'Ankit101'.
+wa_mara-mbrsh = 'P'.
+wa_mara-ernam = 'Chirag'.
+wa_mara-pstat = '3'.
+APPEND wa_mara TO t_mara.
+
+LOOP AT t_mara into wa_mara.
+  WRITE: / wa_mara-matnr, wa_mara-mbrsh, wa_mara-ernam, wa_mara-pstat. "replace t_mara with wa_mara
+ENDLOOP.
+```
+
+
+
 Here are the ABAP programs for Sem 3, Sem 4, Sem 5, and Sem 6, following the same structure as the Sem 1 programs you provided.
 
 Semester 3 - Insert Data
