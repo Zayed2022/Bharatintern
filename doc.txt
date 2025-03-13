@@ -1,3 +1,5 @@
+https://docs.google.com/document/d/1cwTqPhfChgobjlvbfnoNhSojUB7hhPg8izcCy434yqk/edit?usp=sharing
+
 *work on vbap to internal table.
 REPORT z_vbap_demo.
 
